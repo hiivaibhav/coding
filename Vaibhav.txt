@@ -1,0 +1,52 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class OrgChart {
+
+    public static String[][] orgStructure = {
+            {"CEO", ""},
+            {"VP of Sales", "CEO"},
+            {"Sales Manager", "VP of Sales"},
+            {"Sales Rep 1", "Sales Manager"},
+            {"Sales Rep 2", "Sales Manager"},
+            {"VP of Engineering", "CEO"},
+            {"Software Engineer 1", "VP of Engineering"},
+            {"Software Engineer 2", "VP of Engineering"},
+    };
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter a person's name: ");
+        String personToQuery = in.nextLine();
+
+        // Find the index of the person in the org chart
+        int personIndex = findPersonIndex(personToQuery);
+
+        if (personIndex != -1) {
+            System.out.println("Direct reports of " + personToQuery + ":");
+            listDirectReports(personIndex);
+
+            System.out.println("\nReports to:");
+            System.out.println(orgStructure[personIndex][1]);
+        } else {
+            System.out.println("Person not found in the org chart.");
+        }
+    }
+
+    public static int findPersonIndex(String personName) {
+        for (int i = 0; i < orgStructure.length; i++) {
+            if (orgStructure[i][0].equals(personName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void listDirectReports(int personIndex) {
+        for (int i = 0; i < orgStructure.length; i++) {
+            if (orgStructure[i][1].equals(orgStructure[personIndex][0])) {
+                System.out.println(orgStructure[i][0]);
+            }
+        }
+    }
+}
